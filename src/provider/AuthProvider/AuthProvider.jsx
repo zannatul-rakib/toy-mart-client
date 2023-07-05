@@ -42,7 +42,26 @@ const AuthProvider = ({ children }) => {
     return () => {
         return subscribe()
     }
-}, [])
+    }, [])
+    
+    // theme switch 
+    const [theme, setTheme] = useState(
+        localStorage.getItem("theme") ? localStorage.getItem("theme") : 'cupcake'
+      );
+    
+      useEffect(() => {
+        localStorage.setItem("theme", theme);
+        const localTheme = localStorage.getItem("theme");
+        document.querySelector("html").setAttribute("data-theme", localTheme);
+      }, [theme]);
+    
+      const handleToggle = (e) => {
+        if (!e.target.checked) {
+          setTheme('cupcake');
+        } else {
+          setTheme("synthwave");
+        }
+      };
     
     const authInfo = {
         user,
@@ -50,7 +69,9 @@ const AuthProvider = ({ children }) => {
         createUser,
         loginUser,
         googleSignIn,
-        logOut
+        logOut,
+        handleToggle,
+        theme
     }
     return (
         <AuthContext.Provider value={authInfo}>
