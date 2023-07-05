@@ -12,6 +12,10 @@ const Toys = () => {
     },[toys])
     return (
         <div className="lg:mx-20 py-20 mx-2">
+            <div className="text-center mb-10">
+              <h2 className="text-primary text-xl lg:text-3xl font-semibold lg:font-bold mb-2">Our Latest Toys</h2>
+              <p>You Love this toys. This toy is very beautiful</p>
+          </div>
             <div className="flex">
                 <div className="hidden lg:block lg:w-[20%]">
                     <div className="mr-5 p-5 bg-white rounded-md">
