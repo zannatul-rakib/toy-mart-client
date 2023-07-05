@@ -36,7 +36,7 @@ const Header = () => {
     </>
   );
   return (
-    <div className="fixed z-10 top-0 left-0  w-full border-b">
+    <div className="fixed z-20 top-0 left-0  w-full border-b">
       <div className="navbar bg-base-200 lg:px-20">
         <div className="navbar-start">
           <div className="dropdown">

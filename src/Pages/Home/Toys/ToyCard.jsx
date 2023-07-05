@@ -7,7 +7,7 @@ const ToyCard = ({ toy }) => {
     const { product_name, price, rating, picture, category } = toy;
     return (
     
-        <div className="card bg-base-100 shadow-xl overflow-hidden group">
+        <div className="card bg-base-100 shadow-xl overflow-hidden group border">
   <figure className="px-5 pt-5">
                 <img src={picture} alt="Toy picture" className="rounded-xl h-40" />
                 <div className='absolute top-10 right-5 translate-x-12 transition-all group-hover:translate-x-0  z-10'>
