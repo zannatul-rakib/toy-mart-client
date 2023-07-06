@@ -34,7 +34,7 @@ const ToyDetails = () => {
                             
                             <span onClick={() => {
                                 if (count < 1) {
-                                    return
+                                    return;
                                 }
                                 else {
                                     setCount(count - 1)

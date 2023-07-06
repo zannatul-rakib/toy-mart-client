@@ -61,7 +61,8 @@ const AuthProvider = ({ children }) => {
         } else {
           setTheme("synthwave");
         }
-      };
+    };
+    
     
     const authInfo = {
         user,
@@ -71,7 +72,7 @@ const AuthProvider = ({ children }) => {
         googleSignIn,
         logOut,
         handleToggle,
-        theme
+        theme,
     }
     return (
         <AuthContext.Provider value={authInfo}>

@@ -4,7 +4,10 @@ import { BsCartPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const ToyCard = ({ toy }) => {
-  const { product_name, price, rating, picture, category, _id } = toy;
+    const { product_name, price, rating, picture, category, _id } = toy;
+    
+    
+    
   return (
     <div className="card bg-base-100 shadow-xl overflow-hidden group border">
       <figure className="px-5 pt-5">
