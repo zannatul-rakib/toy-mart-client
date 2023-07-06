@@ -4,10 +4,29 @@ import userIcon from "../../../assets/user.svg";
 import { BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
 import { AiFillSetting, AiOutlineUser } from "react-icons/ai";
 import { AuthContext } from "../../../provider/AuthProvider/AuthProvider";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Header = () => {
-  const { user, handleToggle } = useContext(AuthContext);
+  const { user, handleToggle, logOut } = useContext(AuthContext);
 
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        console.log('user logout');
+        showToastMessage();
+      })
+      .catch(e => {
+        console.log(e.message);
+    })
+  }
+
+  const showToastMessage = () => {
+    toast.success('User logout', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
   
 
   const menuItem = (
@@ -37,6 +56,7 @@ const Header = () => {
   );
   return (
     <div className="fixed z-20 top-0 left-0  w-full border-b">
+      <ToastContainer/>
       <div className="navbar bg-base-200 lg:px-20">
         <div className="navbar-start">
           <div className="dropdown">
@@ -141,7 +161,7 @@ const Header = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="justify-between">
+                      <a onClick={handleLogOut} className="justify-between">
                         Logout
                         <span className="badge">
                           <BiLogOutCircle />
