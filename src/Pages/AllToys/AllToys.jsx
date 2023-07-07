@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import ToyCard from "../Home/Toys/ToyCard";
+import AllToyCard from "./AllToyCard";
+
 
 
 const AllToys = () => {
     const [toys, setToys] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/toys')
+        fetch('https://toy-market-server-drab.vercel.app/toys')
             .then(res => res.json())
             .then(data => setToys(data))
     },[toys])
     return (
         <div className="lg:mx-20 py-20 mx-2">
-            <div className="text-center mb-10">
-              <h2 className="text-primary text-xl lg:text-3xl font-semibold lg:font-bold mb-2">Our Latest Toys</h2>
-              <p>You Love this toys. This toy is very beautiful</p>
-          </div>
+            
             <div className="flex">
                 <div className="hidden lg:block lg:w-[20%]">
                     <div className="mr-5 p-5 bg-white rounded-md">
@@ -32,12 +29,9 @@ const AllToys = () => {
                 <div className="lg:w-[80%] w-full">
                     <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {
-                            toys.map(toy => <ToyCard key={ toy._id} toy={toy} />)
+                            toys.map(toy => <AllToyCard key={ toy._id} toy={toy} />)
                         }
                     </div>
-                    <div className="text-center mt-10">
-              <Link to='/all-toys'  className="btn btn-primary">Show More</Link>
-          </div>
                 </div>
             </div>
             
