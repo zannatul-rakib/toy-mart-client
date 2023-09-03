@@ -6,18 +6,37 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider/AuthProvider";
 
 
-const AllToyCard = ({toy}) => {
+const AllToyCard = ({ toy }) => {
 
-    const { product_name, price, rating, picture, category, _id } = toy;
+  const { user } = useContext(AuthContext);
 
-    const { handleCart } = useContext(AuthContext);
+  const { product_name, price, rating, picture, category, _id } = toy;
 
-    return (
-        <div className="card bg-base-100 shadow-xl overflow-hidden group border">
+  const handleCart = (id) => {
+    console.log(id)
+    const cartData = { email: user.email, name: product_name, price, picture, category }
+    fetch('http://localhost:5000/carts', {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(cartData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.acknowledged) {
+          alert('your toy add')
+        }
+      })
+
+  }
+
+  return (
+    <div className="card bg-base-100 shadow-xl overflow-hidden group border">
       <figure className="px-5 pt-5">
         <img src={picture} alt="Toy picture" className="rounded-xl h-40" />
         <div className="absolute top-10 right-5 translate-x-12 transition-all group-hover:translate-x-0  z-10">
-          <span onClick={()=>handleCart(_id)} title="ADD TO CART" className="cursor-pointer text-2xl">
+          <span onClick={() => handleCart(_id)} title="ADD TO CART" className="cursor-pointer text-2xl">
             <BsCartPlus />
           </span>
         </div>
@@ -42,7 +61,7 @@ const AllToyCard = ({toy}) => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default AllToyCard;

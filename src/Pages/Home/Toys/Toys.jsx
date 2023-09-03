@@ -6,12 +6,12 @@ const Toys = () => {
   const [toys, setToys] = useState([]);
 
   useEffect(() => {
-    fetch("https://toy-market-server-drab.vercel.app/toys")
+    fetch("http://localhost:5000/toys")
       .then((res) => res.json())
       .then((data) => setToys(data.slice(0, 12)));
   }, [toys]);
-    
-    
+
+
   return (
     <div className="lg:mx-20 py-20 mx-2">
       <div className="text-center mb-10">

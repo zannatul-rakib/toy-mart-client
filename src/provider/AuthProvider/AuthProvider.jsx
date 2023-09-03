@@ -1,7 +1,6 @@
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { app } from "../../firebase/firebase.config";
 import { createContext, useEffect, useState } from "react";
-import { getDataFromLS, setDataToLS } from "../../tools/tools";
 
 
 
@@ -9,7 +8,7 @@ const auth = getAuth(app)
 
 export const AuthContext = createContext();
 
- 
+
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -34,82 +33,72 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
-    useEffect(()=> {
-    const subscribe = onAuthStateChanged(auth, currentUser => {
-        setUser(currentUser);
-        setLoading(false);
-    })
-        
-    return () => {
-        return subscribe()
-    }
+    useEffect(() => {
+        const subscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            setLoading(false);
+        })
+
+        return () => {
+            return subscribe()
+        }
     }, [])
-    
+
     // theme switch 
     const [theme, setTheme] = useState(
         localStorage.getItem("theme") ? localStorage.getItem("theme") : 'cupcake'
-      );
-    
-      useEffect(() => {
+    );
+
+    useEffect(() => {
         localStorage.setItem("theme", theme);
         const localTheme = localStorage.getItem("theme");
         document.querySelector("html").setAttribute("data-theme", localTheme);
-      }, [theme]);
-    
-      const handleToggle = (e) => {
+    }, [theme]);
+
+    const handleToggle = (e) => {
         if (!e.target.checked) {
-          setTheme('cupcake');
+            setTheme('cupcake');
         } else {
-          setTheme("synthwave");
+            setTheme("synthwave");
         }
     };
 
-    // handle localStorage
-
+    // handle cart
     const [toys, setToys] = useState([]);
     const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    fetch("https://toy-market-server-drab.vercel.app/toys")
-      .then((res) => res.json())
-      .then((data) => setToys(data));
-  }, [toys]);
-
-    
     useEffect(() => {
-        const storedCart = getDataFromLS();
-        const saveCart = [];
+        fetch("http://localhost:5000/toys")
+            .then((res) => res.json())
+            .then((data) => setToys(data));
+    }, [toys]);
 
-        for (const id in storedCart) {
-            const addedToy = toys.find(toy => toy._id === id)
-            if (addedToy) {
-                const quantity = storedCart[id];
-                addedToy.quantity = quantity;
-                saveCart.push(addedToy);
-            }
-        }
-        setCart(saveCart);
-    },[toys])
+    useEffect(() => {
+        fetch(`http://localhost:5000/carts?email=${user?.email}`)
+            .then((res) => res.json())
+            .then((data) => setCart(data));
+    }, [cart])
 
 
-    const handleCart = (toy) => {
-        // console.log(id);
-        let newCart = [];
-        const exists = cart.find(t => t.id == toy._id);
-        if (!exists) {
-            toy.quantity = 1;
-            newCart = [...cart, toy];
-        }
-        else {
-            exists.quantity = exists.quantity + 1;
-            const remaining = cart.filter(t => t.id !== toy._id);
-            newCart = [...remaining, exists];
-        }
-        setCart(newCart)
-        setDataToLS(toy.id)
-    }
-    
-    
+    // useEffect(() => {
+    //     const storedCart = getDataFromLS();
+    //     const saveCart = [];
+
+    //     for (const id in storedCart) {
+    //         const addedToy = toys.find(toy => toy._id === id)
+    //         if (addedToy) {
+    //             const quantity = storedCart[id];
+    //             addedToy.quantity = quantity;
+    //             saveCart.push(addedToy);
+    //         }
+    //     }
+    //     setCart(saveCart);
+    // }, [toys])
+
+
+
+
+
     const authInfo = {
         user,
         loading,
@@ -119,7 +108,6 @@ const AuthProvider = ({ children }) => {
         logOut,
         handleToggle,
         theme,
-        handleCart,
         toys,
         cart
     }

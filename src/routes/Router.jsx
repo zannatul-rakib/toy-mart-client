@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
             {
                 path: '/toys/:id',
                 element: <PrivateRouter><ToyDetails />,</PrivateRouter>,
-                loader: ({ params }) => fetch(`https://toy-market-server-drab.vercel.app/toys/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/toys/${params.id}`)
             },
             {
                 path: '/all-toys',
@@ -37,11 +37,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/add-toy",
-                element: <AddToy/>
+                element: <AddToy />
             },
             {
                 path: '/my-toys',
-                element: <MyToys/>
+                element: <MyToys />
             }
         ]
     },
