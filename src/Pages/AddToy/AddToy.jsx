@@ -10,7 +10,7 @@ const AddToy = () => {
         const image = form.imgURL.value;
 
         const item = { product_name: name, price, picture: image, category }
-        fetch('http://localhost:5000/toys', {
+        fetch('https://toy-market-server-1hmfi9q3h-zrakib-dev.vercel.app/toys', {
             method: "POST",
             headers: {
                 "content-type": "application/json"

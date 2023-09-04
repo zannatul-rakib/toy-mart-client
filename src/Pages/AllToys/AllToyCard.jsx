@@ -15,7 +15,7 @@ const AllToyCard = ({ toy }) => {
   const handleCart = (id) => {
     console.log(id)
     const cartData = { email: user.email, name: product_name, price, picture, category }
-    fetch('http://localhost:5000/carts', {
+    fetch('https://toy-market-server-1hmfi9q3h-zrakib-dev.vercel.app/carts', {
       method: "POST",
       headers: {
         "content-type": "application/json"
